@@ -1,4 +1,7 @@
 import random
+import sys
+import keyboard
+# from getch import getch
 
 
 class Field:
@@ -129,16 +132,43 @@ class Field:
             self._shift_down(y)
 
     def show(self):
-        print("------------------------------------------------------")
+
+        for i in range(self.size + 2):
+            sys.stdout.write("\x1b[1A\x1b[2K")
+        print("score: " + str(self.score))
         for i in range(self.size):
             string = ""
             for j in range(self.size):
-                if self.get(i, j) != -1:
-                    string += str(self.get(i, j)) + " " * (5 - len(str(self.get(i, j))))
-                else:
-                    string += "*" + " " * 4
-
+                if self.get(i, j) == 1:
+                    string += "\u001b[32m" + str(self.get(i, j)) + "\u001b[0m" +  " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 2:
+                    string += "\u001b[36m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 4:
+                    string += "\u001b[35m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 8:
+                    string += "\u001b[31m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 16 or self.get(i, j) == 32:
+                    string += "\u001b[32;1m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 64 or self.get(i, j) == 2048:
+                    string += "\u001b[35;1m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 128 or self.get(i, j) == 256:
+                    string += "\u001b[33m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == 512 or self.get(i, j) == 1024:
+                    string += "\u001b[33;1m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
+                    continue
+                if self.get(i, j) == -1:
+                    string +=  "*" + " " * 4
+                    continue
+ 
             print(string)
+        
 
     def next(self, i, j):
         if i == self.size - 1 and j == self.size - 1:
@@ -172,17 +202,17 @@ class Field:
                 print("End!")
                 break
             self.show()
-            choice = input()
-            if choice == "left":
+            key = input()
+            if key == "a":
                 self.shift_left()
-            if choice == "right":
+            if key == "d":
                 self.shift_right()
-            if choice == "up":
+            if key == "w":
                 self.shift_up()
-            if choice == "down":
+            if key == "s":
                 self.shift_down()
             self.show()
-            if choice == "break":
+            if key == "esc":
                 break
             print("score: " + str(self.score))
 
