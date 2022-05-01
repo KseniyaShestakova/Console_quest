@@ -5,7 +5,7 @@ A small console quest. It makes you able to create a console quest with your own
 To run the quest:
 ```
 git clone git@github.com:KseniyaShestakova/MIPT_quest_TP2022.git
-cd MIPT_quest_TP2022MIPT_quest_TP2022/
+cd MIPT_quest_TP2022/
 git checkout checkpoint_3
 python3 main.py parameters_study.txt study_quest.txt
 ```
