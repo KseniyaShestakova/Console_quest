@@ -176,11 +176,16 @@ class State:
                                   "Stay on the choice: " + possibilities[0]]
                 self.outputer.output_error(arr_of_strings)
                 break
-            c = int(input())
-            if c <= 0 or c > len(possibilities):
-                self.outputer.output_error(["Input out of range!"])
-            else:
-                return c
+            try:
+                c = int(input())
+                if c <= 0 or c > len(possibilities):
+                    self.outputer.output_error(["Input out of range!"])
+                else:
+                    return c
+
+            except ValueError:
+                self.outputer.output_error(["Incorrect input!"])
+
 
     def perform_selection(self):
         arr_of_strings = ["You need to choose something from the options: "] + self.next_nodes_outputs

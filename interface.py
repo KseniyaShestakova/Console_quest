@@ -1,4 +1,5 @@
 from termcolor import colored, cprint
+import os
 
 
 class Outputer:
@@ -31,7 +32,7 @@ class Outputer:
             cprint('| ' + current_string + ' ' * (width - 4 - len(current_string)) + ' |', color)
 
     def output(self, arr_of_strings, color):
-        width = 80
+        width = os.get_terminal_size().columns
         cprint('-' * width, color)
         for string in arr_of_strings:
             self.output_string(string, width, color)

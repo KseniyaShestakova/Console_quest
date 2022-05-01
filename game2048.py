@@ -130,9 +130,10 @@ class Field:
         for y in range(self.size):
             self._shift_down(y)
 
-    def show(self):
-        for i in range(self.size + 2):
-            sys.stdout.write("\x1b[1A\x1b[2K")
+    def show(self, need_cleaning_up):
+        if need_cleaning_up:
+            for i in range(self.size + 2):
+                sys.stdout.write("\x1b[1A\x1b[2K")
         print("score: " + str(self.score))
         for i in range(self.size):
             string = ""
@@ -199,13 +200,14 @@ class Field:
         self.set(empty_cells_list[position][0], empty_cells_list[position][1], additive)
 
     def play(self):
+        need_cleaning_up = False
         while True:
             self.check_victory()
             self.add_point()
             if self.end_of_the_game:
                 print("End!")
                 break
-            self.show()
+            self.show(need_cleaning_up)
             key = input()
             if key == 'a':
                 self.shift_left()
@@ -215,7 +217,8 @@ class Field:
                 self.shift_up()
             if key == 's':
                 self.shift_down()
-            self.show()
+            need_cleaning_up = True
+            self.show(need_cleaning_up)
             if key == "esc":
                 break
             print("score: " + str(self.score))
