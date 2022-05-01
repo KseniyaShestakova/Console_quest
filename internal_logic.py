@@ -205,7 +205,7 @@ class State:
         if self.inputer_id == 1:
             c = self.keyboard_selection(possibilities)
         else:
-            c = self.input_selection(possibilities)
+            c = self.input_selection(possibilities) - 1
 
         obj = Field(5 - (c % 3))
         while self.enter_count:
