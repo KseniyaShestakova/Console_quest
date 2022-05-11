@@ -4,9 +4,10 @@ A small console quest. It makes you able to create a console quest with your own
 ### Execution
 To run the quest:
 ```
-git clone git@github.com:KseniyaShestakova/Python_quest_MIPT.git
-cd Python_quest_MIPT/
+git clone git@github.com:KseniyaShestakova/MIPT_quest_TP2022.git
+cd MIPT_quest_TP2022/
 git checkout web_quest
+export FLASK_APP=app.py
 flask run
 ```
 ### Installing necessary libraries:
