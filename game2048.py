@@ -1,11 +1,10 @@
 import random
 import sys
-import keyboard
-# from getch import getch
 
 
 class Field:
     end_of_the_game = False
+    victory = False
     size = 4
     score = 0
     matrix = [[-1, -1, -1, -1],
@@ -131,16 +130,16 @@ class Field:
         for y in range(self.size):
             self._shift_down(y)
 
-    def show(self):
-
-        for i in range(self.size + 2):
-            sys.stdout.write("\x1b[1A\x1b[2K")
+    def show(self, need_cleaning_up):
+        if need_cleaning_up:
+            for i in range(self.size + 2):
+                sys.stdout.write("\x1b[1A\x1b[2K")
         print("score: " + str(self.score))
         for i in range(self.size):
             string = ""
             for j in range(self.size):
                 if self.get(i, j) == 1:
-                    string += "\u001b[32m" + str(self.get(i, j)) + "\u001b[0m" +  " " * (5 - len(str(self.get(i, j))))
+                    string += "\u001b[32m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
                     continue
                 if self.get(i, j) == 2:
                     string += "\u001b[36m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
@@ -164,11 +163,10 @@ class Field:
                     string += "\u001b[33;1m" + str(self.get(i, j)) + "\u001b[0m" + " " * (5 - len(str(self.get(i, j))))
                     continue
                 if self.get(i, j) == -1:
-                    string +=  "*" + " " * 4
+                    string += "*" + " " * 4
                     continue
- 
+
             print(string)
-        
 
     def next(self, i, j):
         if i == self.size - 1 and j == self.size - 1:
@@ -177,6 +175,13 @@ class Field:
             return [i, j + 1]
         else:
             return [i + 1, 0]
+
+    def check_victory(self):
+        for i in range(self.size):
+            for j in range(self.size):
+                if self.get(i, j) == 2048:
+                    self.victory = True
+                    self.end_of_the_game = True
 
     def add_point(self):
         additive = random.randint(1, 2)
@@ -195,27 +200,26 @@ class Field:
         self.set(empty_cells_list[position][0], empty_cells_list[position][1], additive)
 
     def play(self):
-
+        need_cleaning_up = False
         while True:
+            self.check_victory()
             self.add_point()
             if self.end_of_the_game:
                 print("End!")
                 break
-            self.show()
+            self.show(need_cleaning_up)
             key = input()
-            if key == "a":
+            if key == 'a':
                 self.shift_left()
-            if key == "d":
+            if key == 'd':
                 self.shift_right()
-            if key == "w":
+            if key == 'w':
                 self.shift_up()
-            if key == "s":
+            if key == 's':
                 self.shift_down()
-            self.show()
+            need_cleaning_up = True
+            self.show(need_cleaning_up)
             if key == "esc":
                 break
             print("score: " + str(self.score))
 
-
-obj = Field(5)
-obj.play()
