@@ -4,22 +4,22 @@ A small console quest. It makes you able to create a console quest with your own
 
 To run the quest:
 ```
-git clone git@github.com:KseniyaShestakova/MIPT_quest_TP2022.git
-cd MIPT_quest_TP2022/
+git clone git@github.com:KseniyaShestakova/Console_quest.git
+cd Console_quest/
 git checkout checkpoint_3
 python3 main.py parameters_study.txt study_quest.txt
 ```
 (for playing a quest about MIPT life)
 or 
 ```
-cd MIPT_quest_TP2022/
+cd Console_quest/
 git checkout checkpoint_3
 python3 main.py parameters_again.txt nodes_again.txt
 ```
 (for playing a quest with rules explanation)
 or
 ```
-cd MIPT_quest_TP2022/
+cd Console_quest/
 git checkout checkpoint_3
 python3 main.py <my_parameters> <my_position>
 ```
